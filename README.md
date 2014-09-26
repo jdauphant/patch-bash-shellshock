@@ -27,7 +27,7 @@ db1.example.com
 vulnerable
 this is a test
 -> Your bash is vulnerable
-% env x='() { :;}; echo vulnerable' bash -c "echo this is a test"                                                   ~/flaminem/project/ansible-playbooks julien@jd-pt
+% env x='() { :;}; echo vulnerable' bash -c "echo this is a test"                                                  
 bash: warning: x: ignoring function definition attempt
 bash: error importing function definition for `x'
 this is a test

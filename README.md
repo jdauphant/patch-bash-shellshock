@@ -1,8 +1,11 @@
 patch-bash-CVE-2014-7169
 ===========================
 
-Patch bash with ansible 
+Patch bash #shellshock with ansible 
 
+# Supported distributions
+- Debian
+- Ubuntu
 
 # Usage :
     pip install ansible

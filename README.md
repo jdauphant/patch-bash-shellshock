@@ -7,6 +7,8 @@ Patch bash with ansible
 # Usage :
     pip install ansible
     ansible-playbook -i your_inventory_file patch-bash-CVE-2014-7169.yml
+    # or
+    ansible-playbook -i "192.168.0.10," patch-bash-CVE-2014-7169.yml
 
 your_inventory_file just need to contain your server list :
 ```

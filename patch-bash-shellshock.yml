@@ -1,0 +1,42 @@
+---
+ - hosts: all
+   tasks:
+     - name: ensure bash is the last version
+       apt: name=bash state=latest update_cache=yes
+       when: ansible_os_family == "Debian" or ansible_os_family == "Linuxmint"
+
+     - name: ensure bash is not vulnerable to CVE-2014-6271
+       command: |
+          env x='() { :;}; echo vulnerable' bash -c 'echo this is a test'
+       register: result
+       failed_when: "'vulnerable' in result.stdout"
+       changed_when: false
+       always_run: yes
+       ignore_errors: yes
+
+     - name: ensure bash is not vulnerable to CVE-2014-7169
+       shell: >
+         "cd /tmp; rm -f /tmp/echo; env 'x=() { (a)=>\' bash -c 'echo date'; cat /tmp/echo"
+       register: result
+       failed_when: "'error importing function definition for' in result.stdout"
+       changed_when: false
+       always_run: yes
+       ignore_errors: yes
+
+     - name: ensure bash is not vulnerable to CVE-2014-7186
+       command: >
+         bash -c "true $(printf '<<EOF %.0s' {1..79})"
+       register: result
+       failed_when: "result.rc != 0"
+       changed_when: false
+       always_run: yes
+       ignore_errors: yes
+
+     - name: ensure bash is not vulnerable to CVE-2014-7187
+       shell: |
+         bash -c '(for x in {1..200} ; do echo "for x$x in ; do :"; done; for x in {1..200} ; do echo done ; done)' | bash
+       register: result
+       failed_when: "result.rc != 0"
+       changed_when: false
+       always_run: yes
+       ignore_errors: yes
